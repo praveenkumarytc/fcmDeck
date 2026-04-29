@@ -1,0 +1,10 @@
+{
+  "name": "fcm-console",
+  "version": "1.0.0",
+  "description": "Static FCM sender — sign JWT and call FCM HTTP v1 directly from the browser.",
+  "scripts": {
+    "serve": "firebase emulators:start --only hosting",
+    "deploy": "firebase deploy --only hosting"
+  },
+  "private": true
+}

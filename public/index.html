@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="color-scheme" content="light dark" />
+
+    <title>FCM Deck — Free Firebase Push Notification Sender (FCM Console)</title>
+    <meta
+      name="description"
+      content="FCM Deck is a free, open-source web tool to send Firebase Cloud Messaging push notifications. Multi-project, multi-token, custom payload, dark mode. 100% client-side — your service account JSON never leaves your browser."
+    />
+    <meta
+      name="keywords"
+      content="FCM, Firebase Cloud Messaging, push notification, FCM sender, FCM console, Firebase push, send FCM HTTP v1, multicast push, web push tester, fcmdeck"
+    />
+    <meta name="author" content="FCM Deck" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://fcmdeck.web.app/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FCM Deck" />
+    <meta property="og:title" content="FCM Deck — Free Firebase Push Notification Sender" />
+    <meta
+      property="og:description"
+      content="Send FCM push notifications from your browser. Multi-project, multi-token, custom payload. 100% client-side, no backend, your keys never leave your device."
+    />
+    <meta property="og:url" content="https://fcmdeck.web.app/" />
+    <meta property="og:image" content="https://fcmdeck.web.app/og-image.svg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FCM Deck — Firebase Push Notification Sender" />
+    <meta
+      name="twitter:description"
+      content="Free, open-source, client-side FCM sender. Multi-project, multi-token, custom payload. Your keys never leave your browser."
+    />
+    <meta name="twitter:image" content="https://fcmdeck.web.app/og-image.svg" />
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "FCM Deck",
+        "alternateName": "FCM Console",
+        "url": "https://fcmdeck.web.app/",
+        "description": "Free, open-source, client-side Firebase Cloud Messaging push notification sender.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (Web)",
+        "browserRequirements": "Requires a modern browser with Web Crypto API support.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@type": "Organization",
+          "name": "FCM Deck"
+        }
+      }
+    </script>
+  </head>
+  <body data-theme="light">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+          </svg>
+        </div>
+        <div>
+          <h1>FCM Deck</h1>
+          <p>Send Firebase push notifications with style.</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="helpBtn" type="button" class="icon-btn" aria-label="How it works" title="How it works">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </button>
+        <button id="exportBtn" type="button" class="ghost-btn" title="Export saved projects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Export
+        </button>
+        <label for="importInput" class="ghost-btn" title="Import projects backup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          Import
+          <input id="importInput" type="file" accept=".json" hidden />
+        </label>
+        <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel sidebar">
+        <div class="section-title">
+          <h2>Projects</h2>
+          <span id="projectCount" class="pill">0</span>
+        </div>
+
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input id="projectSearch" type="search" placeholder="Search projects..." />
+        </div>
+
+        <div id="projectList" class="project-list" aria-live="polite"></div>
+
+        <button id="openAddProjectBtn" type="button" class="primary-btn add-project-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Add Project
+        </button>
+      </aside>
+
+      <section class="panel main-panel">
+        <div class="main-header">
+          <div>
+            <h2 id="activeProjectTitle">No project selected</h2>
+            <p id="activeProjectSubtitle" class="muted">Add or select a project to start sending notifications.</p>
+          </div>
+          <div class="header-meta">
+            <span id="connectionPill" class="status-pill status-idle">Idle</span>
+          </div>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button class="tab-btn active" data-tab="compose" role="tab" aria-selected="true">Compose</button>
+          <button class="tab-btn" data-tab="history" role="tab" aria-selected="false">History</button>
+        </div>
+
+        <div class="tab-panel" data-panel="compose">
+          <div class="mode-switch" role="tablist" aria-label="Compose mode">
+            <button type="button" class="mode-btn active" data-mode="simple" role="tab" aria-selected="true">Simple</button>
+            <button type="button" class="mode-btn" data-mode="custom" role="tab" aria-selected="false">Custom Payload</button>
+          </div>
+
+          <form id="fcmForm" class="grid-form" autocomplete="off">
+            <div class="field full">
+              <label>Firebase Project</label>
+              <input id="projectName" type="text" readonly placeholder="No project selected" />
+            </div>
+
+            <div class="simple-fields-wrap">
+              <div class="grid-form">
+                <div class="field">
+                  <label for="targetType">Target Type</label>
+                  <select id="targetType" name="targetType">
+                    <option value="token">Device Token(s)</option>
+                    <option value="topic">Topic</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="priority">Priority</label>
+                  <select id="priority" name="priority">
+                    <option value="HIGH" selected>High</option>
+                    <option value="NORMAL">Normal</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="targetValue" id="targetValueLabel">Device Tokens (comma or newline separated)</label>
+                  <textarea id="targetValue" name="targetValue" rows="2" placeholder="token1, token2, token3"></textarea>
+                </div>
+
+                <div class="field full">
+                  <label for="title">Title</label>
+                  <input id="title" name="title" type="text" maxlength="120" placeholder="New message" />
+                </div>
+
+                <div class="field full">
+                  <label for="body">Body</label>
+                  <textarea id="body" name="body" rows="3" maxlength="500" placeholder="Write the notification body..."></textarea>
+                </div>
+
+                <div class="field full">
+                  <label for="imageUrl">Image URL (optional)</label>
+                  <input id="imageUrl" name="imageUrl" type="url" placeholder="https://..." />
+                </div>
+
+                <details class="advanced full">
+                  <summary>Advanced — Data Payload (JSON)</summary>
+                  <textarea id="dataPayload" rows="4" placeholder='{"key1":"value1","key2":"value2"}'></textarea>
+                  <p class="hint muted">Optional. Must be a valid JSON object of string values.</p>
+                </details>
+              </div>
+            </div>
+
+            <div class="custom-fields-wrap hidden">
+              <div class="custom-toolbar">
+                <div class="custom-target-row">
+                  <label for="customTargetType">Target Type</label>
+                  <select id="customTargetType">
+                    <option value="token">Device Token(s)</option>
+                    <option value="topic">Topic</option>
+                  </select>
+
+                  <label for="customTargetValue">Target Value</label>
+                  <input id="customTargetValue" type="text" placeholder="token / multiple tokens or topic name" />
+                </div>
+                <div class="template-row">
+                  <span class="muted">Templates:</span>
+                  <button type="button" class="ghost-btn small" data-template="basic">Basic</button>
+                  <button type="button" class="ghost-btn small" data-template="data">Data + Notification</button>
+                  <button type="button" class="ghost-btn small" data-template="android">Android Channel</button>
+                  <button type="button" class="ghost-btn small" data-template="apns">iOS APNs</button>
+                  <button type="button" class="ghost-btn small" data-template="webpush">Web Push</button>
+                  <button type="button" class="ghost-btn small" id="formatJsonBtn">Format</button>
+                  <button type="button" class="ghost-btn small" id="validateJsonBtn">Validate</button>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="rawPayload">Message JSON</label>
+                <textarea id="rawPayload" rows="16" spellcheck="false" placeholder='{"notification":{"title":"Hello","body":"World"}}'></textarea>
+                <p class="hint muted">
+                  Write the FCM message body. Target (token/topic/tokens) is set above and merged automatically.
+                  Reference: <a href="https://firebase.google.com/docs/reference/admin/node/firebase-admin.messaging.message" target="_blank" rel="noopener">Admin SDK Message</a>.
+                </p>
+              </div>
+            </div>
+
+            <div class="actions full">
+              <button id="sendButton" type="submit" class="primary-btn" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+                <span id="sendButtonText">Send Notification</span>
+              </button>
+              <button type="reset" class="ghost-btn">Clear</button>
+            </div>
+          </form>
+
+          <div id="resultCard" class="result-card hidden">
+            <div class="result-header">
+              <span id="resultTitle">Result</span>
+              <button id="copyResultBtn" type="button" class="icon-btn small" title="Copy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <pre id="result"></pre>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" data-panel="history">
+          <div class="history-header">
+            <p class="muted">Recent notifications sent from this browser.</p>
+            <button id="clearHistoryBtn" type="button" class="ghost-btn small">Clear All</button>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modalTitle">Add Project</h3>
+          <button id="modalCloseBtn" type="button" class="icon-btn small" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <form id="projectForm" class="grid-form">
+          <div class="field full">
+            <label for="projectAlias">Project Display Name</label>
+            <input id="projectAlias" type="text" placeholder="e.g. Production Android App" required />
+          </div>
+          <div class="field full" id="serviceAccountField">
+            <label for="serviceAccountUpload">Service Account JSON</label>
+            <input id="serviceAccountUpload" type="file" accept=".json" required />
+            <p class="hint muted">The file is stored in your browser only. Never uploaded anywhere except for sending.</p>
+          </div>
+          <div class="actions full">
+            <button type="button" id="modalCancelBtn" class="ghost-btn">Cancel</button>
+            <button type="submit" class="primary-btn" id="modalSaveBtn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="welcomeBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+      <div class="modal welcome-modal">
+        <div class="welcome-hero">
+          <div class="welcome-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+            </svg>
+          </div>
+          <h3 id="welcomeTitle">Welcome to FCM Deck</h3>
+          <p class="muted">A simple way to send Firebase push notifications.</p>
+        </div>
+
+        <div class="welcome-body">
+          <div class="privacy-banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+            <div>
+              <strong>Your keys never leave your browser.</strong>
+              <span>We don't store, log, or send your service account JSON anywhere. Everything is saved locally in your browser only.</span>
+            </div>
+          </div>
+
+          <ol class="steps">
+            <li>
+              <span class="step-num">1</span>
+              <div>
+                <strong>Add a project</strong>
+                <p class="muted">Click <em>Add Project</em>, give it a name, and upload your Firebase service account JSON.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              <div>
+                <strong>Compose a notification</strong>
+                <p class="muted">Use <em>Simple</em> for quick title + body, or <em>Custom Payload</em> for full FCM message JSON.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              <div>
+                <strong>Send</strong>
+                <p class="muted">Send to a single device token, multiple tokens, or a topic. View results in <em>History</em>.</p>
+              </div>
+            </li>
+          </ol>
+
+          <p class="hint muted">
+            All sending happens directly from your browser to Firebase Cloud Messaging.
+            No backend, no Cloud Functions.
+          </p>
+        </div>
+
+        <div class="welcome-actions">
+          <label class="welcome-checkbox">
+            <input id="dontShowAgain" type="checkbox" checked />
+            <span>Don't show this again</span>
+          </label>
+          <button id="welcomeCloseBtn" type="button" class="primary-btn">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <script type="module" src="./firebase-init.js"></script>
+    <script src="./fcm-client.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
