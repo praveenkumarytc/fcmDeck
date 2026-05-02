@@ -154,6 +154,17 @@
           </svg>
           Add Project
         </button>
+
+        <!-- Desktop-only (see styles): below primary actions so the compose workflow stays unobstructed. -->
+        <div
+          data-ad-wrap="sidebar"
+          class="ad-slot ad-slot--sidebar"
+          role="region"
+          aria-label="Advertisement"
+        >
+          <p class="ad-disclosure muted">Advertisement</p>
+          <div data-ad-mount class="ad-slot__mount"></div>
+        </div>
       </aside>
 
       <section class="panel main-panel">
@@ -300,6 +311,11 @@
       </section>
     </main>
 
+    <footer data-ad-wrap="footer" class="site-footer-ad" role="region" aria-label="Advertisement">
+      <p class="ad-disclosure muted">Advertisement</p>
+      <div data-ad-mount class="ad-slot__mount ad-slot__mount--footer"></div>
+    </footer>
+
     <div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true">
       <div class="modal">
         <div class="modal-header">
@@ -399,5 +415,6 @@
     <script type="module" src="./firebase-init.js"></script>
     <script src="./fcm-client.js"></script>
     <script src="./app.js"></script>
+    <script src="./adsense.js"></script>
   </body>
 </html>

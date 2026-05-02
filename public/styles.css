@@ -169,6 +169,63 @@ p {
   max-height: calc(100vh - 110px);
 }
 
+/* Ad placements — outside the compose flow; reserved height limits layout shift */
+.ad-slot--sidebar {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.ad-disclosure {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px;
+  color: var(--text-muted);
+}
+
+.ad-slot__mount {
+  min-height: 250px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+
+.ad-slot__mount--footer {
+  min-height: 90px;
+}
+
+.site-footer-ad {
+  width: min(1280px, calc(100% - 40px));
+  margin: 4px auto 28px;
+  padding: 0;
+}
+
+@media (max-width: 960px) {
+  /* One placement on small screens avoids stacked clutter above the composer */
+  .ad-slot--sidebar {
+    display: none !important;
+  }
+
+  .site-footer-ad {
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+}
+
+@media print {
+  .ad-slot--sidebar,
+  .site-footer-ad {
+    display: none !important;
+  }
+}
+
 .section-title {
   display: flex;
   align-items: center;
